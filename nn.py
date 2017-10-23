@@ -4,7 +4,8 @@ from numpy.random import randn
 logistic = (lambda x: 1/(1+exp(-x)), lambda x,f: f*(1-f))
 relu = (lambda x: where(x>0, x, 0), lambda x,f: where(x>0, 1., 0.))
 ident = (lambda x: x, lambda x,f: 1)
-squareloss = lambda target: (lambda x: sum((x-target)**2), lambda x,f: 2*(x-target))
+squareloss = lambda target: (lambda x: sum((x-target)**2), lambda x,f=None: 2*(x-target))
+logloss = lambda target: (lambda y: sum(-target*log(y) - (1-target)*log(1-y)), lambda y,f=None: -target/y + (1-target)/(1-y))
 
 def fwprop(xin, W, f):
     z  = []
